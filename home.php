@@ -136,6 +136,7 @@ $speicher = $row[13];
 
                                 <!-- Meldung -->
                                 <div id="meldung" class="alert alert-info" role="alert"><b>Willkommen</b> bei Strategia Imperialis</div>
+                                <p id="ajaxmeldung"></p>
 
                                 <!-- iFrame -->
                                 <script type="text/javascript">
@@ -145,13 +146,12 @@ $speicher = $row[13];
                                         var str = "";
                                         generateFieldValues();
 
-
                                         str += '<table id="fightboard" class="table-condensed">'
 
                                             for(i = 0; i < rows; i++){
                                                str += '<tr>'
                                                for (j = 0; j < columns; j++){
-                                                  str += '<td>' +  '<a class="thumbnail" href="javascript:attack(' + ID + ')"><div id="' + ID + '" style="width:90px; height:90px;">'+ Felder[ID] +'</div></a>' + '</td>'
+                                                  str += '<td>' +  '<a class="thumbnail" href="javascript:attack(' + ID + ')"><div id="' + ID + '" style="width:90px; height:90px; background-color:white;">'+ Felder[ID] +'</div></a>' + '</td>'
                                                   ID = ID+1;
                                                }
                                                str += '</tr>'
@@ -159,6 +159,23 @@ $speicher = $row[13];
 
                                         str += '</table>'
                                         document.write(str)
+
+                                        fieldSet();
+
+                                        
+                                        function fieldSet() {
+                                            //Gegner in rot
+                                            document.getElementById(0).style.backgroundColor = "red"; 
+
+                                            //Neutral in blau
+                                            for (i = 1; i < 19; i++) { 
+                                                document.getElementById(i).style.backgroundColor = "blue"; 
+                                            }
+
+                                            //Eigene grün
+                                            document.getElementById(19).style.backgroundColor = "green"; 
+
+                                        }
 
                                         function generateFieldValues(){
 
@@ -182,7 +199,7 @@ $speicher = $row[13];
                                             var anzSchwert = Felder[Feldnummer][0];
                                             var anzBogen = Felder[Feldnummer][1];
                                             var anzSekunden = Felder[Feldnummer][2];
-                                            if ()
+
                                             document.getElementById(Feldnummer).style.backgroundColor = "green"; 
                                         }
                                 </script>   
@@ -269,7 +286,6 @@ $speicher = $row[13];
 
                 update();
                 anzeige();
-                fieldSet();
 
                 function check(id) {
 
@@ -411,20 +427,6 @@ $speicher = $row[13];
                     gold = gold - kostenlvl1;
                 }
 
-                function fieldSet() {
-                    //Gegner in rot
-                    document.getElementById(0).style.backgroundColor = "red"; 
-
-                    //Neutral in blau
-                    for (i = 1; i < 19; i++) { 
-                        document.getElementById(i).style.backgroundColor = "blue"; 
-                    }
-
-                    //Eigene grün
-                    document.getElementById(19).style.backgroundColor = "green"; 
-
-                }
-
                 function ajaxwrite() {
                 //Create XHR instance
                 var xhr;
@@ -442,7 +444,7 @@ $speicher = $row[13];
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState === 4) {
                             if (xhr.status == 200 && xhr.status < 300) {
-                            document.getElementById("alert").innerHTML = xhr.responseText;
+                            document.getElementById("ajaxmeldung").innerHTML = xhr.responseText;
                             }
                     }
                 }
