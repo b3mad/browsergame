@@ -1,4 +1,0 @@
-browsergame
-===========
-
-A simple browsergame

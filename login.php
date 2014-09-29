@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
         session_start();
         $_SESSION['username'] = $row['username'];
         $_SESSION['logged'] = TRUE;
-        header("Location: user.php"); // Modify to go to the page you would like 
+        header("Location: home.php"); // Modify to go to the page you would like 
         exit;
     } else {
         header("Location: test1.php");
