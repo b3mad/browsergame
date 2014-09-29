@@ -1,0 +1,4 @@
+browsergame
+===========
+
+A simple browsergame
