@@ -216,9 +216,9 @@ $speicher = $row[13];
 
                                             if (anzSchwert < sword && anzBogen < archer){
                                                 meldung("info", "angriff");
+                                                sword = sword - anzSchwert;
+                                                archer = archer - anzBogen;
                                                 function angriff(){
-                                                    sword = sword - anzSchwert;
-                                                    archer = archer - anzBogen;
                                                     document.getElementById(Feldnummer).style.backgroundColor = "green"; 
                                                     meldung("success", "angriff", anzSchwert, "Schwertkämpfer", anzBogen, "Bogenschützen");
                                                 }
