@@ -38,7 +38,7 @@ $speicher = $row[13];
             <meta charset="utf-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <meta name="author" content="Philippe Ruoss" />
+            <meta name="author" content="Philippe Ruoss, Olivier Alther" />
             <meta name="Keywords" content="" />
             <meta name="Description" content="" />
                 <meta http-equiv="refresh" content="; url=user.php" />
@@ -157,12 +157,12 @@ $speicher = $row[13];
                                         var str = "";
                                         generateFieldValues();
 
-                                        str += '<table id="fightboard" class="table-condensed">'
+                                        str += '<table id="karten_container" class="table-condensed">'
 
                                             for(i = 0; i < rows; i++){
                                                str += '<tr>'
                                                for (j = 0; j < columns; j++){
-                                                  str += '<td>' +  '<a class="thumbnail" href="javascript:attack(' + ID + ')"><div id="' + ID + '" style="width:90px; height:90px;">'+ Felder[ID] +'</div></a>' + '</td>'
+                                                  str += '<td>' +  '<a class="thumbnail" href="javascript:attack(' + ID + ')"><div id="' + ID + '" style="width:100%; height:100px;">'+ (ID+1) +'</div></a>' + '</td>'
                                                   ID = ID+1;
                                                }
                                                str += '</tr>'
@@ -215,12 +215,16 @@ $speicher = $row[13];
                                             var anzSekunden = Felder[Feldnummer][2];
 
                                             if (anzSchwert < sword && anzBogen < archer){
-                                                sword = sword - anzSchwert;
-                                                archer = archer - anzBogen;
-                                                document.getElementById(Feldnummer).style.backgroundColor = "green"; 
-                                                meldung("success", "angriff", anzSchwert, "Schwertkämpfer", anzBogen, "Bogenschützen");
+                                                meldung("info", "angriff");
+                                                function angriff(){
+                                                    sword = sword - anzSchwert;
+                                                    archer = archer - anzBogen;
+                                                    document.getElementById(Feldnummer).style.backgroundColor = "green"; 
+                                                    meldung("success", "angriff", anzSchwert, "Schwertkämpfer", anzBogen, "Bogenschützen");
+                                                }
+                                                setTimeout(angriff, (anzSekunden*1000));
                                             } else {
-                                                alert("Du bist zu schlecht!");
+                                                meldung("danger", "angriff", anzSchwert, "Schwertkämpfer", anzBogen, "Bogenschützen");
                                             }
                                         }
                                 </script>   
@@ -428,18 +432,31 @@ $speicher = $row[13];
                             document.getElementById("meldung").innerHTML = "<b>Glückwunsch!</b> Sie besitzen jetzt " + anzahl + " " + einheit + "";
                         }
                         if (betreff == "angriff"){
-                            document.getElementById("meldung").innerHTML = "<b>Glückwunsch!</b> Du hast ein neues Feld erobert. Dabei sind sind " + anzahl + " " + einheit + " und " + anzahl2 + " " + einheit2 + " gestorben";
+                            document.getElementById("meldung").innerHTML = "<b>Glückwunsch!</b> Du hast ein neues Feld erobert. Dabei sind " + anzahl + " " + einheit + " und " + anzahl2 + " " + einheit2 + " gestorben";
                         }
                     } 
 
                     else if (status == "danger"){
                         document.getElementById("meldung").className = "alert alert-danger";
-                        document.getElementById("meldung").innerHTML = "<b>Achtung!</b> Nicht genügend Ressourcen!";
+
+                        if (betreff == "rohstoffKauf"){
+                            document.getElementById("meldung").innerHTML = "<b>Achtung!</b> Nicht genügend Ressourcen!";
+                        }
+                        if (betreff == "einheitenKauf"){
+                            document.getElementById("meldung").innerHTML = "<b>Achtung!</b> Nicht genügend Ressourcen!";
+                        }
+                        if (betreff == "angriff"){
+                            document.getElementById("meldung").innerHTML = "<b>Achtung!</b> Du besitzt zu wenig Einheiten. Es werden mindestens  " + anzahl + " " + einheit + " und " + anzahl2 + " " + einheit2 + " benötigt";
+                        }
                     } 
 
                     else if (status == "info"){
                         document.getElementById("meldung").className = "alert alert-info";
                         document.getElementById("meldung").innerHTML = "<b>Willkommen</b> bei Strategia Imperialis";
+
+                        if (betreff == "angriff"){
+                            document.getElementById("meldung").innerHTML = "<b>Achtung!</b> Angriff läuft!";
+                        }
                     }
                 }
 
