@@ -51,17 +51,28 @@ $speicher = $row[13];
 
                 //Timer Starten
                 var timerStart = Date.now();
+
+                //Rohstoffe setzen
+                var holzPm = "<?php echo $holzPm ?>";
+                var steinPm = "<?php echo $steinPm ?>";
+                var lehmPm = "<?php echo $lehmPm ?>";
+                var goldPm = "<?php echo $goldPm ?>";
+
+                var holz = "<?php echo $holz ?>";
+                var stein = "<?php echo $stein ?>";
+                var lehm = "<?php echo $lehm ?>";
+                var gold = "<?php echo $gold ?>";
+                var sword = "<?php echo $sword ?>";
+                var archer = "<?php echo $archer ?>";
+                var speicher = "<?php echo $speicher ?>";
+
+                //Einheiten setzen
+                var archer = 100;
+                var sword = 100;
+
                 
             </script>
-            <script type="text/javascript">
-                window.console.log = function() {
-                console.error('Sorry , developers tools are blocked here....');
-                window.console.log = function() {
-                return false;
-                    }
-                }
-            console.log('test');
-            </script>
+
         </head>
         <body>
             <!-- Header -->
@@ -138,7 +149,7 @@ $speicher = $row[13];
                                 <div id="meldung" class="alert alert-info" role="alert"><b>Willkommen</b> bei Strategia Imperialis</div>
                                 <p id="ajaxmeldung"></p>
 
-                                <!-- iFrame -->
+                                <!-- Kampffeld -->
                                 <script type="text/javascript">
                                         var rows = 4;
                                         var columns = 5;
@@ -151,7 +162,7 @@ $speicher = $row[13];
                                             for(i = 0; i < rows; i++){
                                                str += '<tr>'
                                                for (j = 0; j < columns; j++){
-                                                  str += '<td>' +  '<a class="thumbnail" href="javascript:attack(' + ID + ')"><div id="' + ID + '" style="width:90px; height:90px; background-color:white;">'+ Felder[ID] +'</div></a>' + '</td>'
+                                                  str += '<td>' +  '<a class="thumbnail" href="javascript:attack(' + ID + ')"><div id="' + ID + '" style="width:90px; height:90px;">'+ Felder[ID] +'</div></a>' + '</td>'
                                                   ID = ID+1;
                                                }
                                                str += '</tr>'
@@ -161,8 +172,7 @@ $speicher = $row[13];
                                         document.write(str)
 
                                         fieldSet();
-
-                                        
+     
                                         function fieldSet() {
                                             //Gegner in rot
                                             document.getElementById(0).style.backgroundColor = "red"; 
@@ -185,12 +195,16 @@ $speicher = $row[13];
                                                 Felder[i]=new Array();
 
                                                 //Werte einfüllen
+
+                                                //Schwert
                                                 temp = Math.floor((Math.random() * 10) + 5);
-                                                Felder[i][0]= temp + " Schwert";
+                                                Felder[i][0]= temp;
+                                                //Bogen
                                                 temp = Math.floor((Math.random() * 6) + 2);
-                                                Felder[i][1]= temp + " Bogen";
+                                                Felder[i][1]= temp;
+                                                //Sekunden
                                                 temp = Math.floor((Math.random() * 10) + 1);
-                                                Felder[i][2]= temp + " Sek";
+                                                Felder[i][2]= temp;
                                             }
 
                                         }
@@ -200,7 +214,14 @@ $speicher = $row[13];
                                             var anzBogen = Felder[Feldnummer][1];
                                             var anzSekunden = Felder[Feldnummer][2];
 
-                                            document.getElementById(Feldnummer).style.backgroundColor = "green"; 
+                                            if (anzSchwert < sword && anzBogen < archer){
+                                                sword = sword - anzSchwert;
+                                                archer = archer - anzBogen;
+                                                document.getElementById(Feldnummer).style.backgroundColor = "green"; 
+                                                meldung("success", "angriff", anzSchwert, "Schwertkämpfer", anzBogen, "Bogenschützen");
+                                            } else {
+                                                alert("Du bist zu schlecht!");
+                                            }
                                         }
                                 </script>   
 
@@ -264,28 +285,16 @@ $speicher = $row[13];
 
 
             <script type="text/javascript">
-                var holzPm = "<?php echo $holzPm ?>";
-                var steinPm = "<?php echo $steinPm ?>";
-                var lehmPm = "<?php echo $lehmPm ?>";
-                var goldPm = "<?php echo $goldPm ?>";
 
-                var holz = "<?php echo $holz ?>";
-                var stein = "<?php echo $stein ?>";
-                var lehm = "<?php echo $lehm ?>";
-                var gold = "<?php echo $gold ?>";
-                var sword = "<?php echo $sword ?>";
-                var archer = "<?php echo $archer ?>";
-                var speicher = "<?php echo $speicher ?>";
+                konstruktor();
 
-                status = 0;
+                //Wird beim ersten Programmstart ausgeführt
+                function konstruktor() {
+                    kostenlvl1 = 100;
 
-                kostenlvl1 = 100;
-
-                archer = 0;
-                sword = 0;
-
-                update();
-                anzeige();
+                    update();
+                    anzeige();
+                }
 
                 function check(id) {
 
@@ -294,60 +303,60 @@ $speicher = $row[13];
                             if (holz, stein, lehm, gold >= kostenlvl1) {
                                 holzPm = holzPm * 2;
                                 bezahlen();
-                                meldung("success");
+                                meldung("success", "rohstoffKauf", holzPm, "Holz");
                             }
                             else {
-                                meldung("danger");
+                                meldung("danger", "rohstoffKauf", holzPm, "Holz");
                             }
                             break;
                         case 2:
                            if (holz, stein, lehm, gold >= kostenlvl1) {
                                 steinPm = steinPm * 2;
                                 bezahlen();
-                                meldung("success");
+                                meldung("success", "rohstoffKauf", steinPm, "Stein");
                             }
                             else {
-                                meldung("danger");
+                                meldung("danger", "rohstoffKauf", steinPm, "Stein");
                             }
                             break;
                         case 3:
                             if (holz, stein, lehm, gold >= kostenlvl1) {
                                 lehmPm = lehmPm * 2;
                                 bezahlen();
-                                meldung("success");
+                                meldung("success", "rohstoffKauf", lehmPm, "Lehm");
                             }
                             else {
-                                meldung("danger");
+                                meldung("danger", "rohstoffKauf", lehmPm, "Lehm");
                             }
                             break;
                         case 4:
                             if (holz, stein, lehm, gold >= kostenlvl1) {
                                 goldPm = goldPm * 2;
                                 bezahlen();
-                                meldung("success");
+                                meldung("success", "rohstoffKauf", goldPm, "Gold");
                             }
                             else {
-                                meldung("danger");
+                                meldung("danger", "rohstoffKauf", goldPm, "Gold");
                             }
                             break;
                         case 5:
                             if (holz, stein, lehm, gold >= kostenlvl1) {
                                 sword = sword + 1;
                                 bezahlen();
-                                meldung("success");
+                                meldung("success", "einheitenKauf", sword, "Schwertkämpfer");
                             }
                             else {
-                                meldung("danger");
+                                meldung("danger", "einheitenKauf", sword, "Schwertkämpfer");
                             }
                             break;
                         case 6:
                             if (holz, stein, lehm, gold >= kostenlvl1) {
                                 archer = archer + 1;
                                 bezahlen();
-                                meldung("success");
+                                meldung("success", "einheitenKauf", archer, "Bogenschützen");
                             }
                             else {
-                                meldung("danger");
+                                meldung("danger", "einheitenKauf", archer, "Bogenschützen");
                             }
                             break;
                     }
@@ -407,14 +416,28 @@ $speicher = $row[13];
 
                 }
 
-                function meldung(status) {
+                function meldung(status, betreff, anzahl, einheit, anzahl2, einheit2) {
+
                     if (status == "success"){
                         document.getElementById("meldung").className = "alert alert-success";
-                        document.getElementById("meldung").innerHTML = "<b>Glückwunsch!</b> Sie verdienen jetzt mehr";
-                    } else if (status == "danger"){
+
+                        if (betreff == "rohstoffKauf"){
+                            document.getElementById("meldung").innerHTML = "<b>Glückwunsch!</b> Sie verdienen jetzt " + anzahl + " " + einheit + " pro Sekunde";
+                        } 
+                        if (betreff == "einheitenKauf"){
+                            document.getElementById("meldung").innerHTML = "<b>Glückwunsch!</b> Sie besitzen jetzt " + anzahl + " " + einheit + "";
+                        }
+                        if (betreff == "angriff"){
+                            document.getElementById("meldung").innerHTML = "<b>Glückwunsch!</b> Du hast ein neues Feld erobert. Dabei sind sind " + anzahl + " " + einheit + " und " + anzahl2 + " " + einheit2 + " gestorben";
+                        }
+                    } 
+
+                    else if (status == "danger"){
                         document.getElementById("meldung").className = "alert alert-danger";
                         document.getElementById("meldung").innerHTML = "<b>Achtung!</b> Nicht genügend Ressourcen!";
-                    } else if (status == "info"){
+                    } 
+
+                    else if (status == "info"){
                         document.getElementById("meldung").className = "alert alert-info";
                         document.getElementById("meldung").innerHTML = "<b>Willkommen</b> bei Strategia Imperialis";
                     }
