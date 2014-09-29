@@ -1,5 +1,5 @@
 <?php
-$con = mysql_connect("localhost", "root", "", "browsergame");
+$con = mysql_connect("localhost", "root", "root", "browsergame");
 if (!$con) {
     die('Could not connect: ' . mysql_error());
 }
