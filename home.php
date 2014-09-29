@@ -53,6 +53,15 @@ $speicher = $row[13];
                 var timerStart = Date.now();
                 
             </script>
+            <script type="text/javascript">
+                window.console.log = function() {
+                console.error('Sorry , developers tools are blocked here....');
+                window.console.log = function() {
+                return false;
+                    }
+                }
+            console.log('test');
+            </script>
         </head>
         <body>
             <!-- Header -->
@@ -377,6 +386,7 @@ $speicher = $row[13];
                                 document.getElementById("sword").innerHTML = sword + " Schwertkämpfer";
                                 document.getElementById("archer").innerHTML = archer + " Bogenschützen";
                                 document.getElementById("speicher").innerHTML = speicher + " Speichervolumen";
+                                ajaxwrite();
                             }, 1000);
 
                 }
@@ -413,6 +423,34 @@ $speicher = $row[13];
                     //Eigene grün
                     document.getElementById(19).style.backgroundColor = "green"; 
 
+                }
+
+                function ajaxwrite() {
+                //Create XHR instance
+                var xhr;
+                if (window.XMLHttpRequest) {
+                    xhr = new XMLHttpRequest();
+                }
+                else if (window.ActiveXObject) {
+                    xhr = new ActiveXObject("Msxml2.XMLHTTP");
+                }
+                else {
+                    throw new Error("Ajax is not supported by this browser");
+                }
+
+                // 2. Define what to do when XHR feed you the response from the server
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                            if (xhr.status == 200 && xhr.status < 300) {
+                            document.getElementById("alert").innerHTML = xhr.responseText;
+                            }
+                    }
+                }
+
+                // 3. Specify your action, location and Send to the server - Start
+                xhr.open('GET', 'DBwriter.php?holz=' + holz + '&stein=' + stein + '&lehm=' + lehm + '&gold=' + gold + '&holzPm=' + holzPm + '&steinPm=' + steinPm + '&lehmPm= ' + lehmPm + '&goldPm=' + goldPm + '&sword=' + sword + '&archer=' + archer + '&speicher=' + speicher, true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.send();
                 }
 
             </script>
