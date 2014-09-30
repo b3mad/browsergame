@@ -25,49 +25,18 @@ $sword = $_GET['sword'];
 $archer = $_GET['archer'];
 $speicher = $_GET['speicher'];
 
-
-
-
-
-
-
-/*
-echo $holz;
-echo $stein;
-echo $lehm;
-echo $gold;
-echo $archer;
-*/
-
 if (isset($_SESSION['username'])) {
 
-    $sql1 = "UPDATE table
-SET holz = '$holz',
-    stein = '$stein',
-    lehm = '$lehm',
-    gold = '$gold',
-    holzPm = '$holzPm',
-    steinPm = '$steinPm',
-    lehmPm = '$lehmPm',
-    goldPm = '$goldPm',
-    sword = '$sword',
-    archer = '$archer',
-    speicher = '$speicher',
-WHERE username='$usr'";
-
-    $sql2 = "SELECT * FROM spieler WHERE username='$usr'";
-    $eintragen = mysql_query($sql1, $con);
-    $auslesen = mysql_query($sql2, $con);
-    $row = mysql_fetch_row($auslesen);
+    $sql = "UPDATE spieler Set holz = '$holz', stein = '$stein', lehm = $lehm, gold = $gold, holzPm = $holzPm, steinPm = $steinPm, lehmPm = $lehmPm, goldPm = $goldPm, sword = $sword, archer = $archer, speicher = $speicher WHERE username = '$usr'";
+      
+    $eintragen = mysql_query($sql, $con);
 
     if ($eintragen == true) {
         echo "Eintrag war erfolgreich";
     } else {
         echo "Fehler beim Speichern";
     }
-
 }
 
 
-//Array übergeben und nacher auslesen statt alle übergeben?
 ?>

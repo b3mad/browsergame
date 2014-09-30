@@ -274,10 +274,10 @@ $speicher = $row[13];
 
                                             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                                                 <ul class="nav navbar-nav">
-                                                    <li><p class="navbar-text" id="holzPm">Holz: 10</p></li>
-                                                    <li><p class="navbar-text" id="steinPm">Stein: 10</p></li>
-                                                    <li><p class="navbar-text" id="lehmPm">Lehm: 10</p></li>
-                                                    <li><p class="navbar-text" id="goldPm">Gold: 10</p></li>
+                                                    <li><p class="navbar-text" id="holzPm">Holz: 20</p></li>
+                                                    <li><p class="navbar-text" id="steinPm">Stein: 20</p></li>
+                                                    <li><p class="navbar-text" id="lehmPm">Lehm: 20</p></li>
+                                                    <li><p class="navbar-text" id="goldPm">Gold: 20</p></li>
                                                 </ul>
                                                 <div class="pull-right">
                                                     <ul class="nav pull-right">
