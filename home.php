@@ -28,6 +28,10 @@ $goldPm = $row[10];
 $archer = $row[11];
 $sword = $row[12];
 $speicher = $row[13];
+$lvlHolz = $row[14];
+$lvlStein = $row[15];
+$lvlLehm = $row[16];
+$lvlGold = $row[17];
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -62,9 +66,16 @@ $speicher = $row[13];
                                     var stein = "<?php echo $stein ?>";
                                     var lehm = "<?php echo $lehm ?>";
                                     var gold = "<?php echo $gold ?>";
+
                                     var sword = "<?php echo $sword ?>";
                                     var archer = "<?php echo $archer ?>";
+
                                     var speicher = "<?php echo $speicher ?>";
+
+                                    var lvlHolz = "<?php echo $lvlHolz ?>";
+                                    var lvlStein = "<?php echo $lvlStein ?>";
+                                    var lvlLehm = "<?php echo $lvlLehm ?>";
+                                    var lvlGold = "<?php echo $lvlGold ?>";
 
                                     //Einheiten setzen
                                     archer = 100;
@@ -334,6 +345,7 @@ $speicher = $row[13];
                                                 case 1:
                                                     if (holz >= kostenHolz1 && stein >= kostenStein1 && lehm >= kostenLehm1 && gold >= kostenGold1) {
                                                         holzPm = holzPm * 1.2;
+                                                        runden(5);
                                                         holz = holz - kostenHolz1;
                                                         stein = stein - kostenStein1;
                                                         lehm = lehm - kostenLehm1;
@@ -345,6 +357,7 @@ $speicher = $row[13];
                                                         kostenGold1 = kostenGold1 * multiplikator;
 
                                                         lvlHolz = lvlHolz + 1;
+                                                        runden(1);
                                                         meldung("success", "rohstoffKauf", holzPm, "Holz");
                                                     }
                                                     else {
@@ -355,6 +368,7 @@ $speicher = $row[13];
                                                 case 2:
                                                     if (holz >= kostenHolz2 && stein >= kostenStein2 && lehm >= kostenLehm2 && gold >= kostenGold2) {
                                                         steinPm = steinPm * 1.2;
+                                                        runden(6);
                                                         holz = holz - kostenHolz2;
                                                         stein = stein - kostenStein2;
                                                         lehm = lehm - kostenLehm2;
@@ -366,6 +380,7 @@ $speicher = $row[13];
                                                         kostenGold2 = kostenGold2 * multiplikator;
 
                                                         lvlStein = lvlStein + 1;
+                                                        runden(2);
                                                         meldung("success", "rohstoffKauf", steinPm, "Stein");
                                                     }
                                                     else {
@@ -376,6 +391,7 @@ $speicher = $row[13];
                                                 case 3:
                                                     if (holz >= kostenHolz3 && stein >= kostenStein3 && lehm >= kostenLehm3 && gold >= kostenGold3) {
                                                         lehmPm = lehmPm * 1.2;
+                                                        runden(7);
                                                         holz = holz - kostenHolz3;
                                                         stein = stein - kostenStein3;
                                                         lehm = lehm - kostenLehm3;
@@ -387,6 +403,7 @@ $speicher = $row[13];
                                                         kostenGold3 = kostenGold3 * multiplikator;
 
                                                         lvlLehm = lvlLehm + 1;
+                                                        runden(3);
                                                         meldung("success", "rohstoffKauf", lehmPm, "Lehm");
                                                     }
                                                     else {
@@ -397,6 +414,7 @@ $speicher = $row[13];
                                                 case 4:
                                                     if (holz >= kostenHolz4 && stein >= kostenStein4 && lehm >= kostenLehm4 && gold >= kostenGold4) {
                                                         goldPm = goldPm * 1.2;
+                                                        runden(8);
                                                         holz = holz - kostenHolz4;
                                                         stein = stein - kostenStein4;
                                                         lehm = lehm - kostenLehm4;
@@ -408,6 +426,7 @@ $speicher = $row[13];
                                                         kostenGold4 = kostenGold4 * multiplikator;
 
                                                         lvlGold = lvlGold + 1;
+                                                        runden(4);
                                                         meldung("success", "rohstoffKauf", goldPm, "Gold");
                                                     }
                                                     else {
@@ -444,7 +463,6 @@ $speicher = $row[13];
                                         function update() {
                                             window.setInterval(
                                                     function erzeugen() {
-
                                                         holzPm = parseInt(holzPm, 10);
                                                         holz = parseInt(holz, 10);
                                                         holz = holz + holzPm;
@@ -500,7 +518,7 @@ $speicher = $row[13];
                                                         document.getElementById("kostenStein2").innerHTML = "Kosten Stein: " + kostenStein2;
                                                         document.getElementById("kostenLehm2").innerHTML = "Kosten Lehm: " + kostenLehm2;
                                                         document.getElementById("kostenGold2").innerHTML = "Kosten Gold: " + kostenGold2;
-                                                         //Anzeige Kosten Lehm Upgrade
+                                                        //Anzeige Kosten Lehm Upgrade
                                                         document.getElementById("kostenHolz3").innerHTML = "Kosten Holz: " + kostenHolz3;
                                                         document.getElementById("kostenStein3").innerHTML = "Kosten Stein: " + kostenStein3;
                                                         document.getElementById("kostenLehm3").innerHTML = "Kosten Lehm: " + kostenLehm3;
@@ -562,16 +580,65 @@ $speicher = $row[13];
                                                     stein = stein - 100;
                                                     lehm = lehm - 100;
                                                     gold = gold - 100;
+                                                    break;
 
                                                 case 2:
                                                     holz = holz - 100;
                                                     stein = stein - 100;
                                                     lehm = lehm - 100;
                                                     gold = gold - 100;
+                                                    break;
                                             }
 
                                         }
-
+                                        function runden(nr) {
+                                            switch (nr) {
+                                                case 1:
+                                                    //HolzProduktionKosten runden
+                                                    kostenHolz1 = kostenHolz1.toFixed(0);
+                                                    kostenStein1 = kostenStein1.toFixed(0);
+                                                    kostenLehm1 = kostenLehm1.toFixed(0);
+                                                    kostenGold1 = kostenGold1.toFixed(0);
+                                                    break;
+                                                case 2:
+                                                    //SteinProduktionKosten runden
+                                                    kostenHolz2 = kostenHolz2.toFixed(0);
+                                                    kostenStein2 = kostenStein2.toFixed(0);
+                                                    kostenLehm2 = kostenLehm2.toFixed(0);
+                                                    kostenGold2 = kostenGold2.toFixed(0);
+                                                    break;
+                                                case 3:
+                                                    //LehmProduktionKosten runden
+                                                    kostenHolz3 = kostenHolz3.toFixed(0);
+                                                    kostenStein3 = kostenStein3.toFixed(0);
+                                                    kostenLehm3 = kostenLehm3.toFixed(0);
+                                                    kostenGold3 = kostenGold3.toFixed(0);
+                                                    break;
+                                                case 4:
+                                                    //GoldProduktionKosten runden
+                                                    kostenHolz4 = kostenHolz4.toFixed(0);
+                                                    kostenStein4 = kostenStein4.toFixed(0);
+                                                    kostenLehm4 = kostenLehm4.toFixed(0);
+                                                    kostenGold4 = kostenGold4.toFixed(0);
+                                                    break;
+                                                case 5:
+                                                    //HolzProduktion runden
+                                                    holzPm = holzPm.toFixed(0);
+                                                    break;
+                                                case 6:
+                                                    //SteinProduktion runden
+                                                    steinPm = steinPm.toFixed(0);
+                                                    break;
+                                                case 7:
+                                                    //LehmProduktion runden
+                                                    lehmPm = lehmPm.toFixed(0);
+                                                    break;
+                                                case 8:
+                                                    //GoldProduktion runden
+                                                    goldPm = goldPm.toFixed(0);
+                                                    break;
+                                            }
+                                        }
 
                                         function ajaxwrite() {
                                             //Create XHR instance
@@ -596,7 +663,7 @@ $speicher = $row[13];
                                             }
 
                                             // 3. Specify your action, location and Send to the server - Start
-                                            xhr.open('GET', 'DBwriter.php?holz=' + holz + '&stein=' + stein + '&lehm=' + lehm + '&gold=' + gold + '&holzPm=' + holzPm + '&steinPm=' + steinPm + '&lehmPm= ' + lehmPm + '&goldPm=' + goldPm + '&sword=' + sword + '&archer=' + archer + '&speicher=' + speicher, true);
+                                            xhr.open('GET', 'DBwriter.php?holz=' + holz + '&stein=' + stein + '&lehm=' + lehm + '&gold=' + gold + '&holzPm=' + holzPm + '&steinPm=' + steinPm + '&lehmPm= ' + lehmPm + '&goldPm=' + goldPm + '&sword=' + sword + '&archer=' + archer + '&speicher=' + speicher + '&lvlHolz=' + lvlHolz + '&lvlStein=' + lvlStein + '&lvlLehm=' + lvlLehm + '&lvlGold=' + lvlGold, true);
                                             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                                             xhr.send();
                                         }

@@ -24,6 +24,10 @@ $goldPm = $_GET['goldPm'];
 $sword = $_GET['sword'];
 $archer = $_GET['archer'];
 $speicher = $_GET['speicher'];
+$lvlHolz = $_GET['lvlHolz'];
+$lvlStein = $_GET['lvlStein'];
+$lvlLehm = $_GET['lvlLehm'];
+$lvlGold = $_GET['lvlGold'];
 
 if (isset($_SESSION['username'])) {
 
