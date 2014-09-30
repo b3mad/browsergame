@@ -125,10 +125,10 @@ $speicher = $row[13];
                                                                 <h4 class="text-center">Rohstoffe-Upgrades</h4>
                                                             </div>
                                                             <ul class="list-group list-group-flush text-center">
-                                                                <li class="list-group-item"><a href="javascript:check(1)">+10 Holz</a></li>
-                                                                <li class="list-group-item"><a href="javascript:check(2)">+10 Stein</a></li>
-                                                                <li class="list-group-item"><a href="javascript:check(3)">+10 Lehm</a></li>
-                                                                <li class="list-group-item"><a href="javascript:check(4)">+10 Gold</a></li>
+                                                                <li class="list-group-item"><a href="javascript:check(1)">+10 Holz</a><p id="kostenHolz1"></p><p id="kostenStein1"></p><p id="kostenLehm1"></p><p id="kostenGold1"></p></li>
+                                                                <li class="list-group-item"><a href="javascript:check(2)">+10 Stein</a><p id="kostenHolz2"></p><p id="kostenStein2"></p><p id="kostenLehm2"></p><p id="kostenGold2"></p></li>
+                                                                <li class="list-group-item"><a href="javascript:check(3)">+10 Lehm</a><p id="kostenHolz3"></p><p id="kostenStein3"></p><p id="kostenLehm3"></p><p id="kostenGold3"></p></li>
+                                                                <li class="list-group-item"><a href="javascript:check(4)">+10 Gold</a><p id="kostenHolz4"></p><p id="kostenStein4"></p><p id="kostenLehm4"></p><p id="kostenGold4"></p></li>
                                                             </ul>
                                                         </div> 
 
@@ -295,10 +295,33 @@ $speicher = $row[13];
                                         //Wird beim ersten Programmstart ausgeführt
                                         function konstruktor() {
                                             kosten = 100;
+                                            multiplikator = 1.2;
+
                                             lvlHolz = 1;
                                             lvlStein = 1;
                                             lvlLehm = 1;
                                             lvlGold = 1;
+
+                                            //Anfangskosten Holzproduktion
+                                            kostenHolz1 = 500;
+                                            kostenStein1 = 600;
+                                            kostenLehm1 = 400;
+                                            kostenGold1 = 300;
+                                            //Anfangskosten Steinproduktion
+                                            kostenHolz2 = 750;
+                                            kostenStein2 = 650;
+                                            kostenLehm2 = 700;
+                                            kostenGold2 = 1000;
+                                            //Anfangskosten Lehmproduktion
+                                            kostenHolz3 = 650;
+                                            kostenStein3 = 500;
+                                            kostenLehm3 = 400;
+                                            kostenGold3 = 300;
+                                            //Anfangskosten Goldproduktion
+                                            kostenHolz4 = 100;
+                                            kostenStein4 = 100;
+                                            kostenLehm4 = 100;
+                                            kostenGold4 = 1000;
 
                                             update();
                                             anzeige();
@@ -309,17 +332,18 @@ $speicher = $row[13];
                                             switch (id) {
 
                                                 case 1:
-                                                    kostenHolz = 500;
-                                                    kostenStein = 600;
-                                                    kostenLehm = 400;
-                                                    kostenGold = 300;
+                                                    if (holz >= kostenHolz1 && stein >= kostenStein1 && lehm >= kostenLehm1 && gold >= kostenGold1) {
+                                                        holzPm = holzPm * 1.2;
+                                                        holz = holz - kostenHolz1;
+                                                        stein = stein - kostenStein1;
+                                                        lehm = lehm - kostenLehm1;
+                                                        gold = gold - kostenGold1;
 
-                                                    if (holz >= kostenHolz && stein >= kostenStein && lehm >= kostenLehm && gold >= kostenGold) {
-                                                        holzPm = holzPm * 1.2 * lvlHolz;
-                                                        holz = holz - kostenHolz * 1.3 * lvlHolz;
-                                                        stein = stein - kostenStein * 1.3 * lvlHolz;
-                                                        lehm = lehm - kostenLehm * 1.3 * lvlHolz;
-                                                        gold = gold - kostenGold * 1.3 * lvlHolz;
+                                                        kostenHolz1 = kostenHolz1 * multiplikator;
+                                                        kostenStein1 = kostenStein1 * multiplikator;
+                                                        kostenLehm1 = kostenLehm1 * multiplikator;
+                                                        kostenGold1 = kostenGold1 * multiplikator;
+
                                                         lvlHolz = lvlHolz + 1;
                                                         meldung("success", "rohstoffKauf", holzPm, "Holz");
                                                     }
@@ -329,17 +353,18 @@ $speicher = $row[13];
                                                     break;
 
                                                 case 2:
-                                                    kostenHolz = 750;
-                                                    kostenStein = 650;
-                                                    kostenLehm = 700;
-                                                    kostenGold = 1000;
+                                                    if (holz >= kostenHolz2 && stein >= kostenStein2 && lehm >= kostenLehm2 && gold >= kostenGold2) {
+                                                        steinPm = steinPm * 1.2;
+                                                        holz = holz - kostenHolz2;
+                                                        stein = stein - kostenStein2;
+                                                        lehm = lehm - kostenLehm2;
+                                                        gold = gold - kostenGold2;
 
-                                                    if (holz >= kostenHolz && stein >= kostenStein && lehm >= kostenLehm && gold >= kostenGold) {
-                                                        steinPm = steinPm * 1.2 * lvlStein;
-                                                        holz = holz - kostenHolz * 1.3 * lvlStein;
-                                                        stein = stein - kostenStein * 1.3 * lvlStein;
-                                                        lehm = lehm - kostenLehm * 1.3 * lvlStein;
-                                                        gold = gold - kostenGold * 1.3 * lvlStein;
+                                                        kostenHolz2 = kostenHolz2 * multiplikator;
+                                                        kostenStein2 = kostenStein2 * multiplikator;
+                                                        kostenLehm2 = kostenLehm2 * multiplikator;
+                                                        kostenGold2 = kostenGold2 * multiplikator;
+
                                                         lvlStein = lvlStein + 1;
                                                         meldung("success", "rohstoffKauf", steinPm, "Stein");
                                                     }
@@ -349,17 +374,18 @@ $speicher = $row[13];
                                                     break;
 
                                                 case 3:
-                                                    kostenHolz = 650;
-                                                    kostenStein = 500;
-                                                    kostenLehm = 400;
-                                                    kostenGold = 300;
+                                                    if (holz >= kostenHolz3 && stein >= kostenStein3 && lehm >= kostenLehm3 && gold >= kostenGold3) {
+                                                        lehmPm = lehmPm * 1.2;
+                                                        holz = holz - kostenHolz3;
+                                                        stein = stein - kostenStein3;
+                                                        lehm = lehm - kostenLehm3;
+                                                        gold = gold - kostenGold3;
 
-                                                    if (holz >= kostenHolz && stein >= kostenStein && lehm >= kostenLehm && gold >= kostenGold) {
-                                                        lehmPm = lehmPm * 1.2 * lvlLehm;
-                                                        holz = holz - kostenHolz * 1.3 * lvlLehm;
-                                                        stein = stein - kostenStein * 1.3 * lvlLehm;
-                                                        lehm = lehm - kostenLehm * 1.3 * lvlLehm;
-                                                        gold = gold - kostenGold * 1.3 * lvlLehm;
+                                                        kostenHolz3 = kostenHolz3 * multiplikator;
+                                                        kostenStein3 = kostenStein3 * multiplikator;
+                                                        kostenLehm3 = kostenLehm3 * multiplikator;
+                                                        kostenGold3 = kostenGold3 * multiplikator;
+
                                                         lvlLehm = lvlLehm + 1;
                                                         meldung("success", "rohstoffKauf", lehmPm, "Lehm");
                                                     }
@@ -369,17 +395,18 @@ $speicher = $row[13];
                                                     break;
 
                                                 case 4:
-                                                    kostenHolz = 100;
-                                                    kostenStein = 100;
-                                                    kostenLehm = 100;
-                                                    kostenGold = 1000;
+                                                    if (holz >= kostenHolz4 && stein >= kostenStein4 && lehm >= kostenLehm4 && gold >= kostenGold4) {
+                                                        goldPm = goldPm * 1.2;
+                                                        holz = holz - kostenHolz4;
+                                                        stein = stein - kostenStein4;
+                                                        lehm = lehm - kostenLehm4;
+                                                        gold = gold - kostenGold4;
 
-                                                    if (holz >= kostenHolz && stein >= kostenStein && lehm >= kostenLehm && gold >= kostenGold) {
-                                                        goldPm = goldPm * 1.2 * lvlGold;
-                                                        holz = holz - kostenHolz * 1.3 * lvlGold;
-                                                        stein = stein - kostenStein * 1.3 * lvlGold;
-                                                        lehm = lehm - kostenLehm * 1.3 * lvlGold;
-                                                        gold = gold - kostenGold * 1.3 * lvlGold;
+                                                        kostenHolz4 = kostenHolz4 * multiplikator;
+                                                        kostenStein4 = kostenStein4 * multiplikator;
+                                                        kostenLehm4 = kostenLehm4 * multiplikator;
+                                                        kostenGold4 = kostenGold4 * multiplikator;
+
                                                         lvlGold = lvlGold + 1;
                                                         meldung("success", "rohstoffKauf", goldPm, "Gold");
                                                     }
@@ -448,19 +475,41 @@ $speicher = $row[13];
                                                         time = time + 1;
 
                                                         document.getElementById("zaehler").innerHTML = "Time on Server: " + time + "s";
-
+                                                        //Ressis
                                                         document.getElementById("holz").innerHTML = "Holz: " + holz;
                                                         document.getElementById("stein").innerHTML = "Stein: " + stein;
                                                         document.getElementById("lehm").innerHTML = "Lehm: " + lehm;
                                                         document.getElementById("gold").innerHTML = "Gold: " + gold;
-
+                                                        //Ressis per minute
                                                         document.getElementById("holzPm").innerHTML = "Holz: " + holzPm;
                                                         document.getElementById("steinPm").innerHTML = "Stein: " + steinPm;
                                                         document.getElementById("lehmPm").innerHTML = "Lehm: " + lehmPm;
                                                         document.getElementById("goldPm").innerHTML = "Gold: " + goldPm;
+                                                        //Soldaten
                                                         document.getElementById("sword").innerHTML = sword + " Schwertkämpfer";
                                                         document.getElementById("archer").innerHTML = archer + " Bogenschützen";
+                                                        //Speicher
                                                         document.getElementById("speicher").innerHTML = speicher + " Speichervolumen";
+                                                        //Anzeige Kosten Holz Upgrade
+                                                        document.getElementById("kostenHolz1").innerHTML = "Kosten Holz: " + kostenHolz1;
+                                                        document.getElementById("kostenStein1").innerHTML = "Kosten Stein: " + kostenStein1;
+                                                        document.getElementById("kostenLehm1").innerHTML = "Kosten Lehm: " + kostenLehm1;
+                                                        document.getElementById("kostenGold1").innerHTML = "Kosten Gold: " + kostenGold1;
+                                                        //Anzeige Kosten Stein Upgrade
+                                                        document.getElementById("kostenHolz2").innerHTML = "Kosten Holz: " + kostenHolz2;
+                                                        document.getElementById("kostenStein2").innerHTML = "Kosten Stein: " + kostenStein2;
+                                                        document.getElementById("kostenLehm2").innerHTML = "Kosten Lehm: " + kostenLehm2;
+                                                        document.getElementById("kostenGold2").innerHTML = "Kosten Gold: " + kostenGold2;
+                                                         //Anzeige Kosten Lehm Upgrade
+                                                        document.getElementById("kostenHolz3").innerHTML = "Kosten Holz: " + kostenHolz3;
+                                                        document.getElementById("kostenStein3").innerHTML = "Kosten Stein: " + kostenStein3;
+                                                        document.getElementById("kostenLehm3").innerHTML = "Kosten Lehm: " + kostenLehm3;
+                                                        document.getElementById("kostenGold3").innerHTML = "Kosten Gold: " + kostenGold3;
+                                                        //Anzeige Kosten Gold Upgrade
+                                                        document.getElementById("kostenHolz4").innerHTML = "Kosten Holz: " + kostenHolz4;
+                                                        document.getElementById("kostenStein4").innerHTML = "Kosten Stein: " + kostenStein4;
+                                                        document.getElementById("kostenLehm4").innerHTML = "Kosten Lehm: " + kostenLehm4;
+                                                        document.getElementById("kostenGold4").innerHTML = "Kosten Gold: " + kostenGold4;
                                                         ajaxwrite();
                                                     }, 1000);
 

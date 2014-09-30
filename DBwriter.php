@@ -1,4 +1,5 @@
 <?php
+
 $con = mysql_connect("localhost", "root", "root", "browsergame");
 if (!$con) {
     die('Could not connect: ' . mysql_error());
@@ -26,35 +27,44 @@ $speicher = $_GET['speicher'];
 
 
 
-$meldung = "Es konnten keine Daten in die Datenbank geschrieben werden!";
-$sql1 = "INSERT INTO spieler WHERE username='$usr' (holz, stein, lehm, gold, holzPm, steinPm, lehmPm, godlPm, sword, archer, speicher) VALUES ('$holz', '$stein', '$lehm', '$gold', '$holzPm', '$steinPm', '$lehmPm', '$goldPm', '$sword', '$archer', '$speicher')";
-$sql2 = "SELECT * FROM spieler WHERE username='$usr'";
+
+
 
 
 /*
-  echo $holz;
-  echo $stein;
-  echo $lehm;
-  echo $gold;
-  echo $archer;
- */
+echo $holz;
+echo $stein;
+echo $lehm;
+echo $gold;
+echo $archer;
+*/
 
 if (isset($_SESSION['username'])) {
-$eintragen = mysql_query($sql1, $con);
-$auslesen = mysql_query($sql2, $con);
-$row = mysql_fetch_row($auslesen);
 
-$holzN = $row[3];
-$steinN = $row[4];
-$lehmN = $row[5];
-$goldN = $row[6];
-$holzPmN = $row[7];
-$steinPmN = $row[8];
-$lehmPmN = $row[9];
-$goldPmN = $row[10];
-$archerN = $row[11];
-$swordN = $row[12];
-$speicherN = $row[13];
+    $sql1 = "UPDATE table
+SET holz = '$holz',
+    stein = '$stein',
+    lehm = '$lehm',
+    gold = '$gold',
+    holzPm = '$holzPm',
+    steinPm = '$steinPm',
+    lehmPm = '$lehmPm',
+    goldPm = '$goldPm',
+    sword = '$sword',
+    archer = '$archer',
+    speicher = '$speicher',
+WHERE username='$usr'";
+
+    $sql2 = "SELECT * FROM spieler WHERE username='$usr'";
+    $eintragen = mysql_query($sql1, $con);
+    $auslesen = mysql_query($sql2, $con);
+    $row = mysql_fetch_row($auslesen);
+
+    if ($eintragen == true) {
+        echo "Eintrag war erfolgreich";
+    } else {
+        echo "Fehler beim Speichern";
+    }
 
 }
 
