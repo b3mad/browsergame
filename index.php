@@ -1,28 +1,34 @@
 <?php
-include 'dbconnect.php';
 
-$msg = '';
+if (isset($_POST['submit'])) {
 
-if (isset($_POST['username'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $email = $_POST['email'];
+	$msg = '';
+    include 'dbconnect.php';
 
-    $con = "INSERT INTO spieler (username, password) VALUES ('$username', '$password')";
-    $eintragen = mysql_query($con);
-        
-    if ($eintragen == true) {
-        header("Location: index.php");
+    $username = ($_POST['username']);
+    $password = ($_POST['password']);
+
+    $query = "SELECT * FROM spieler WHERE username='$username' AND password='$password'";
+
+    $result = mysql_query($query) or die(mysql_error());
+    $count = mysql_num_rows($result);
+      
+    if ($count == 1) {
+        $row = mysql_fetch_array($result);
+        session_start();
+        $_SESSION['username'] = $row['username'];
+        $_SESSION['logged'] = TRUE;
+        header("Location: home.php"); 
+        exit;
     } else {
-        echo "Fehler beim Speichern";
+        $msg = "Benutzername und Passwort stimmt nicht!";
     }
-}
-
+} 
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Browsergame | Strategia Imperialis | Registrieren</title>
+	<title>Browsergame | Strategia Imperialis | Login</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="author" content="Philippe Ruoss, Olivier Alther" />
 	<!-- Bootstrap -->
@@ -42,15 +48,6 @@ if (isset($_POST['username'])) {
 		    document.Formular.password.focus();
 		    return false;
 		  }
-		  if (document.Formular.email.value == "") {
-		    document.Formular.email.focus();
-		    return false;
-		  }
-		  if (document.Formular.email.value.indexOf("@") == -1) {
-		    document.Formular.email.focus();
-		    return false;
-		  }
-
 		}
 	</script>
 </head>
@@ -66,29 +63,24 @@ if (isset($_POST['username'])) {
 					Strategia Imperialis ist ein Browsergame, das im Mittelalter spielt. Jeder Spieler ist Herrscher eines kleinen Dorfes, dem er zu Ruhm und Macht verhelfen soll.
 				</p>
 
-				<form class="margin-base-vertical" action="registrieren.php" method="post" onsubmit="return chkFormular()" name="Formular">
+				<form class="margin-base-vertical" action="index.php" method="post" onsubmit="return chkFormular()" name="Formular">
 					<p class="input-group">
 						<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
 						<input type="text" class="form-control input-lg" name="username" placeholder="username" />
 					</p>
 					<p class="input-group">
-						<span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
-						<input type="text" class="form-control input-lg" name="email" placeholder="email" />
-					</p>
-					<p class="input-group">
 						<span class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></span>
 						<input type="password" class="form-control input-lg" name="password" placeholder="password" />
 					</p>
-					<p class="help-block text-center"><small>Du hast bereits einen Account? <a href="index.php">Klick hier!</a></small></p>
+					<p class="help-block text-center"><small>Noch keinen Account? <a href="registrieren.php">Klick hier!</a></small></p>
 					<p class="text-center">
-						<button type="submit" name="submit" class="btn btn-success btn-lg">Registrieren</button>
+						<button type="submit" name="submit" class="btn btn-success btn-lg">Login</button>
 					</p>
 					<span class="fehlermeldung" style="color: red;"><?php echo $msg;?></span>
 				</form>
-
 			</div>
 		</div>
-	</div>
+	</div> 
 
 </body>
 </html>
