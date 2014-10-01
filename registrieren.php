@@ -12,7 +12,7 @@ if (isset($_POST['username'])) {
     $eintragen = mysql_query($con);
         
     if ($eintragen == true) {
-        header("Location: index.php");
+        header("Location: home.php");
     } else {
         echo "Fehler beim Speichern";
     }
